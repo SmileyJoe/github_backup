@@ -1,5 +1,5 @@
 config.json
+db.json
 /repos
-secrets.py
 .idea
 __pycache__
