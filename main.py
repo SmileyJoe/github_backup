@@ -15,7 +15,7 @@ github = Github(config.github.token)
 last_run = datetime.fromisoformat(db.last_run)
 time_start = datetime.now().astimezone(timezone.utc)
 
-for repo in github.get_user().get_repos(affiliation="owner", sort="updated", direction="direction"):
+for repo in github.get_user().get_repos(affiliation="owner", sort="updated", direction="desc"):
     updated_at = repo.updated_at.replace(tzinfo=timezone.utc)
 
     if last_run < updated_at:
