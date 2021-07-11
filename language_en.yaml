@@ -1,17 +1,21 @@
+# titles for the different actions, used in logging etc
 status:
   cloned: Cloned
   updated: Updated
   skipped: Skipped
 
+# language used for pushover notifications
 pushover:
+  # {title} is replaced with either success or fail title
   title: Github sync {title}
   success:
-    title: Success!
+    title: success!
+    # variables are replaced based on data from the script running
     message: |
       Cloned: {count_cloned}
       Updated: {count_updated}
       Skipped: {count_skipped}
       {list_cloned}{list_updated}{list_skipped}
   fail:
-    title: Failed!
+    title: failed!
     message: Something went wrong

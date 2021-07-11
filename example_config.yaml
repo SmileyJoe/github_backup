@@ -1,0 +1,33 @@
+# settings for what to log to the terminal
+logging:
+  # if this is false, the specific types don't matter as nothing is logged
+  enabled: true
+  # what actions to log
+  type:
+    cloned: true
+    updated: true
+    skipped: true
+
+# path to the directory where the repos will be cloned
+repo_dir: <directory_name>
+# language file to use
+language_file: language_en
+
+# settings for github
+github:
+  # auth token needs to have full repo permission so private repos can be retrieved
+  token: <github_token>
+
+# settings for pushover to get a notification when the script is finished
+pushover:
+  # user to send the message to
+  user: <pushover_user_key>
+  # api token for the app that will be sending the message
+  api_token: <pushover_app_api_token>
+  # max character count for a message is 1024, set this to less if you want truncated messages
+  message_limit: 1024
+  # which list of repos to include base on the action
+  notification_type:
+    cloned: true
+    updated: true
+    skipped: true

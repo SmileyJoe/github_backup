@@ -13,24 +13,32 @@ log = Log(config)
 github = Github(config.github.token)
 
 last_run = datetime.fromisoformat(db.last_run)
+# github gives us the updated time back in utc+0, so we need to set that here
 time_start = datetime.now().astimezone(timezone.utc)
 
 for repo in github.get_user().get_repos(affiliation="owner", sort="updated", direction="desc"):
+    # updated at is in utc+0, but it is not explicitly set, so it can't be compared
+    # to a datetime where it is set, so we need to replace the timezone settings
     updated_at = repo.updated_at.replace(tzinfo=timezone.utc)
 
+    # only handle the repo if it was update since the scripts last run
     if last_run < updated_at:
         repo_dir = config.repo_dir + "/" + repo.name
 
+        # if the path is not set, we need to clone the repo
         if not os.path.isdir(repo_dir):
             Repo.clone_from(repo.ssh_url, repo_dir)
             log.cloned(repo.name)
+        # else we need to pull the new contents
         else:
             Repo(repo_dir).remotes.origin.pull()
             log.updated(repo.name)
     else:
         log.skipped(repo.name)
 
+# send the pushover message
 log.pushover()
 
+# save the time the script started
 db.last_run = time_start
 db.save()
