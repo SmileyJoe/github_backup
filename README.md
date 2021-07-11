@@ -16,3 +16,10 @@ This is meant as a backup, the repos it clones should not be updated as there is
 ## Translations
 
 - Copy a language file, rename the 2 letter code and translate it, the file can them be specified in `config.yaml`
+
+## Libraries
+
+- [PyGithub](https://github.com/PyGithub/PyGithub)
+- [GitPython](https://github.com/gitpython-developers/GitPython)
+- [python-pushover](https://github.com/Thibauth/python-pushover)
+- [pyyaml](https://github.com/yaml/pyyaml)
