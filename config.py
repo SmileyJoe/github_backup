@@ -13,6 +13,12 @@ class Config:
         self.github = self._Github(config["github"])
         self.pushover = self._Pushover(config["pushover"])
         self.repo_dir = config["repo_dir"]
+        self.logging = self._Logging(config["logging"])
+
+    class _Logging:
+
+        def __init__(self, config):
+            self.enabled = config["enabled"]
 
     class _Pushover:
 
