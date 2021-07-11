@@ -6,23 +6,24 @@ class Log:
     def __init__(self, config):
         self._config = config.logging
         self._pushover = config.pushover
+        self._language = config.language
         self._cloned = []
         self._updated = []
         self._skipped = []
 
     def updated(self, name):
         if self._config.type.updated:
-            self._repo(name, self._Colors.YELLOW, "updated")
+            self._repo(name, self._Colors.YELLOW, self._language.status.updated)
         self._updated.append(name)
 
     def skipped(self, name):
         if self._config.type.skipped:
-            self._repo(name, self._Colors.RED, "skipped")
+            self._repo(name, self._Colors.RED, self._language.status.skipped)
         self._skipped.append(name)
 
     def cloned(self, name):
         if self._config.type.cloned:
-            self._repo(name, self._Colors.GREEN, "cloned")
+            self._repo(name, self._Colors.GREEN, self._language.status.cloned)
         self._cloned.append(name)
 
     def pushover(self):
@@ -33,29 +34,25 @@ class Log:
         count_updated = len(self._updated)
 
         if count_cloned > 0 or count_updated > 0 or count_skipped > 0:
-            title = "Success!"
+            title = self._language.pushover.success.title
 
-            message = "Cloned: {cloned} \nUpdated: {updated} \nSkipped: {skipped}"\
-                .format(cloned=count_cloned,
-                        updated=count_updated,
-                        skipped=count_skipped)
-
-            message += self._pushover_message("Cloned",
-                                              self._pushover.notification_type.cloned,
-                                              self._cloned)
-
-            message += self._pushover_message("Updated",
-                                              self._pushover.notification_type.updated,
-                                              self._updated)
-
-            message += self._pushover_message("Skipped",
-                                              self._pushover.notification_type.skipped,
-                                              self._skipped)
+            message = self._language.pushover.success.message.\
+                format(count_cloned=count_cloned,
+                       count_updated=count_updated,
+                       count_skipped=count_skipped,
+                       list_cloned=self._pushover_message(self._language.status.cloned,
+                                                          self._pushover.notification_type.cloned,
+                                                          self._cloned),
+                       list_updated=self._pushover_message(self._language.status.updated,
+                                                           self._pushover.notification_type.updated,
+                                                           self._updated),
+                       list_skipped=self._pushover_message(self._language.status.skipped,
+                                                           self._pushover.notification_type.skipped,
+                                                           self._skipped))
 
         else:
-            title = "Failed!"
-
-            message = "Something went wrong"
+            title = self._language.pushover.fail.title
+            message = self._language.pushover.fail.message
 
         if len(message) > self._pushover.message_limit:
             append_message = " ..."
@@ -63,17 +60,18 @@ class Log:
             message = (message[:max_len] + append_message)
 
         pushover.send_message(message,
-                              title="Github sync {title}".format(title=title),
-                              priority=-1)
+                              title=self._language.pushover.title.format(title=title),
+                              priority=-1,
+                              html=1)
 
     def _pushover_message(self, title, log, list_name):
         message = ""
 
         if log and len(list_name) > 0:
-            message += "\n\n{title}:".format(title=title)
+            message += "\n<b><u>{title}:</u></b>\n".format(title=title)
 
             for name in list_name:
-                message += "\n{name}".format(name=name)
+                message += "{name}\n".format(name=name)
 
         return message
 

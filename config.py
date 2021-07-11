@@ -7,9 +7,14 @@ class Config:
 
     @staticmethod
     def load():
-        file_config = open("config.yaml", "r")
-        config = yaml.load(file_config, Loader=yaml.FullLoader)
-        file_config.close()
+        config = Config._load_yaml("config.yaml")
+        config["language"] = Config._load_yaml(config["language_file"] + ".yaml")
+
         return json.loads(json.dumps(config), object_hook=lambda d: SimpleNamespace(**d))
 
-
+    @staticmethod
+    def _load_yaml(file_name):
+        file = open(file_name, "r")
+        data = yaml.load(file, Loader=yaml.FullLoader)
+        file.close()
+        return data

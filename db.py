@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 import os
 import json
 
-# "last_update": "2021-07-11T10:45:17.185972+00:00",
+
 class Db:
     FILE = "db.json"
 

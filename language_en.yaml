@@ -1,0 +1,17 @@
+status:
+  cloned: Cloned
+  updated: Updated
+  skipped: Skipped
+
+pushover:
+  title: Github sync {title}
+  success:
+    title: Success!
+    message: |
+      Cloned: {count_cloned}
+      Updated: {count_updated}
+      Skipped: {count_skipped}
+      {list_cloned}{list_updated}{list_skipped}
+  fail:
+    title: Failed!
+    message: Something went wrong
