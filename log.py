@@ -6,37 +6,65 @@ class Log:
     def __init__(self, config):
         self._config = config.logging
         self._pushover = config.pushover
-        self._count_cloned = 0
-        self._count_updated = 0
-        self._count_skipped = 0
+        self._cloned = []
+        self._updated = []
+        self._skipped = []
 
     def updated(self, name):
         self._repo(name, self._Colors.YELLOW, "updated")
-        self._count_updated += 1
+        self._updated.append(name)
 
     def skipped(self, name):
         self._repo(name, self._Colors.RED, "skipped")
-        self._count_skipped += 1
+        self._skipped.append(name)
 
     def cloned(self, name):
         self._repo(name, self._Colors.GREEN, "cloned")
-        self._count_cloned += 1
+        self._cloned.append(name)
 
     def pushover(self):
         pushover = Client(self._pushover.user, api_token=self._pushover.api_token)
-        if self._count_cloned > 0 or self._count_updated > 0 or self._count_skipped > 0:
-            message = "Cloned: {cloned} \nUpdated: {updated} \nSkipped: {skipped}"\
-                .format(cloned=self._count_cloned,
-                        updated=self._count_updated,
-                        skipped=self._count_skipped)
+
+        count_cloned = len(self._cloned)
+        count_skipped = len(self._skipped)
+        count_updated = len(self._updated)
+
+        if count_cloned > 0 or count_updated > 0 or count_skipped > 0:
             title = "Success!"
+
+            message = "Cloned: {cloned} \nUpdated: {updated} \nSkipped: {skipped}"\
+                .format(cloned=count_cloned,
+                        updated=count_updated,
+                        skipped=count_skipped)
+
+            message += self._pushover_message("Cloned", self._cloned)
+            message += self._pushover_message("Updated", self._updated)
+            message += self._pushover_message("Skipped", self._skipped)
+
         else:
-            message = "Something went wrong"
             title = "Failed!"
+
+            message = "Something went wrong"
+
+        if len(message) > self._pushover.message_limit:
+            append_message = " ..."
+            max_len = self._pushover.message_limit - len(append_message)
+            message = (message[:max_len] + append_message)
 
         pushover.send_message(message,
                               title="Github sync {title}".format(title=title),
                               priority=-1)
+
+    def _pushover_message(self, title, list_name):
+        message = ""
+
+        if len(list_name) > 0:
+            message += "\n\n{title}:".format(title=title)
+
+            for name in list_name:
+                message += "\n{name}".format(name=name)
+
+        return message
 
     def _repo(self, name, color, action):
         self.log("{name} : {color}{action}{end_color}"

@@ -25,6 +25,7 @@ class Config:
         def __init__(self, config):
             self.user = config["user"]
             self.api_token = config["api_token"]
+            self.message_limit = 1024
 
     class _Github:
 
