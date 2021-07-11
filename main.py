@@ -7,7 +7,7 @@ import os
 from datetime import datetime, timezone
 
 
-config = Config()
+config = Config.load()
 db = Db()
 log = Log(config)
 github = Github(config.github.token)
