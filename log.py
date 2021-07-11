@@ -11,15 +11,18 @@ class Log:
         self._skipped = []
 
     def updated(self, name):
-        self._repo(name, self._Colors.YELLOW, "updated")
+        if self._config.type.updated:
+            self._repo(name, self._Colors.YELLOW, "updated")
         self._updated.append(name)
 
     def skipped(self, name):
-        self._repo(name, self._Colors.RED, "skipped")
+        if self._config.type.skipped:
+            self._repo(name, self._Colors.RED, "skipped")
         self._skipped.append(name)
 
     def cloned(self, name):
-        self._repo(name, self._Colors.GREEN, "cloned")
+        if self._config.type.cloned:
+            self._repo(name, self._Colors.GREEN, "cloned")
         self._cloned.append(name)
 
     def pushover(self):
@@ -37,9 +40,17 @@ class Log:
                         updated=count_updated,
                         skipped=count_skipped)
 
-            message += self._pushover_message("Cloned", self._cloned)
-            message += self._pushover_message("Updated", self._updated)
-            message += self._pushover_message("Skipped", self._skipped)
+            message += self._pushover_message("Cloned",
+                                              self._pushover.notification_type.cloned,
+                                              self._cloned)
+
+            message += self._pushover_message("Updated",
+                                              self._pushover.notification_type.updated,
+                                              self._updated)
+
+            message += self._pushover_message("Skipped",
+                                              self._pushover.notification_type.skipped,
+                                              self._skipped)
 
         else:
             title = "Failed!"
@@ -55,10 +66,10 @@ class Log:
                               title="Github sync {title}".format(title=title),
                               priority=-1)
 
-    def _pushover_message(self, title, list_name):
+    def _pushover_message(self, title, log, list_name):
         message = ""
 
-        if len(list_name) > 0:
+        if log and len(list_name) > 0:
             message += "\n\n{title}:".format(title=title)
 
             for name in list_name:
