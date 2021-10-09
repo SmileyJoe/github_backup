@@ -19,10 +19,14 @@ time_start = datetime.now().astimezone(timezone.utc)
 for repo in github.get_user().get_repos(affiliation="owner", sort="updated", direction="desc"):
     # updated at is in utc+0, but it is not explicitly set, so it can't be compared
     # to a datetime where it is set, so we need to replace the timezone settings
-    updated_at = repo.updated_at.replace(tzinfo=timezone.utc)
-
+    pushed_at = repo.pushed_at.replace(tzinfo=timezone.utc)
+    print(repo.name)
+    print(pushed_at)
+    print(repo.pushed_at)
+    print(last_run)
+    print("------")
     # only handle the repo if it was update since the scripts last run
-    if last_run < updated_at:
+    if last_run < pushed_at:
         repo_dir = config.repo_dir + "/" + repo.name
 
         # if the path is not set, we need to clone the repo
