@@ -13,18 +13,14 @@ log = Log(config)
 github = Github(config.github.token)
 
 last_run = datetime.fromisoformat(db.last_run)
-# github gives us the updated time back in utc+0, so we need to set that here
+# github gives us the pushed time back in utc+0, so we need to set that here
 time_start = datetime.now().astimezone(timezone.utc)
 
-for repo in github.get_user().get_repos(affiliation="owner", sort="updated", direction="desc"):
-    # updated at is in utc+0, but it is not explicitly set, so it can't be compared
+for repo in github.get_user().get_repos(affiliation="owner", sort="pushed", direction="desc"):
+    # pushed at is in utc+0, but it is not explicitly set, so it can't be compared
     # to a datetime where it is set, so we need to replace the timezone settings
     pushed_at = repo.pushed_at.replace(tzinfo=timezone.utc)
-    print(repo.name)
-    print(pushed_at)
-    print(repo.pushed_at)
-    print(last_run)
-    print("------")
+
     # only handle the repo if it was update since the scripts last run
     if last_run < pushed_at:
         repo_dir = config.repo_dir + "/" + repo.name

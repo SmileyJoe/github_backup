@@ -3,3 +3,4 @@ db.json
 /repos
 .idea
 __pycache__
+.DS_Store

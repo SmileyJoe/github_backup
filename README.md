@@ -1,5 +1,4 @@
 # Github backup
-TEST
 Python script that will clone all repos owned by the user token, private and public, or pull in any updates if the repo is already cloned.
 
 Note:
