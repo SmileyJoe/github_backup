@@ -27,6 +27,7 @@ for repo in github.get_user().get_repos(affiliation="owner", sort="pushed", dire
 
         # if the path is not set, we need to clone the repo
         if not os.path.isdir(repo_dir):
+            # clone using the token, this means ssh doesn't need to be setup
             repo_url = "https://{username}:{password}@github.com/{repo_name}.git".format(
                 username=config.github.username,
                 password=config.github.token,

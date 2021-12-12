@@ -10,6 +10,7 @@ logging:
 
 # path to the directory where the repos will be cloned
 # if using docker, this needs to be the same in docker-compose.yml and Dockerfile
+# set it to /github/repos to use the default for docker
 repo_dir: <directory_name>
 # language file to use
 language_file: language_en
