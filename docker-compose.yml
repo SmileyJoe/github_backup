@@ -1,0 +1,7 @@
+version: '1'
+services:
+    github:
+        build: .
+        volumes:
+            - ./app:/github/app
+            - ./repos:/github/repos

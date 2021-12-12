@@ -1,0 +1,2 @@
+#run python script every day at midnight
+0 0 * * * /usr/local/bin/python /github/app/hello.py > /proc/1/fd/1 2>/proc/1/fd/2

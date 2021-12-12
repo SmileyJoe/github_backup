@@ -9,6 +9,7 @@ logging:
     skipped: true
 
 # path to the directory where the repos will be cloned
+# if using docker, this needs to be the same in docker-compose.yml and Dockerfile
 repo_dir: <directory_name>
 # language file to use
 language_file: language_en
@@ -17,6 +18,7 @@ language_file: language_en
 github:
   # auth token needs to have full repo permission so private repos can be retrieved
   token: <github_token>
+  username: <user_name>
 
 # settings for pushover to get a notification when the script is finished
 pushover:
