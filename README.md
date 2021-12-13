@@ -11,15 +11,22 @@ This is meant as a backup, the repos it clones should not be updated as there is
 - See [here](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) for generating a github token
 - For the pushover api token, a new app will need to be registered [here](https://pushover.net/apps/build)
 
-## Docker
+### Docker
 
 - Update `Dockerfile` and `docker-compose.yml` to reference the local directory the repos will be cloned to
 - Run the container with `docker-compose up -d`
 
-## Without docker
+### Without docker
 
 - Install the requirements with `pip install -r requirements.txt`
 - Run with `python app/main.py`
+
+## Running on a Synology NAS
+
+- Install docker from package center
+- Install git server from package center
+- Clone the repo using ssh, more info [here](https://kb.synology.com/en-us/DSM/help/Git/git)
+- Follow the setup instructions with docker
 
 ## Translations
 
