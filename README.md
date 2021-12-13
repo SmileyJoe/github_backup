@@ -6,11 +6,20 @@ This is meant as a backup, the repos it clones should not be updated as there is
 
 ## Setup
 
-- Duplicate `example_config.yaml` and rename it to `config.yaml`
+- Copy `example_config.yaml` into `app/` and rename it to `config.yaml`
 - Update `config.yaml` with your keys/settings
-- Install the requirements with `pip install -r requirements.txt`
 - See [here](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) for generating a github token
 - For the pushover api token, a new app will need to be registered [here](https://pushover.net/apps/build)
+
+## Docker
+
+- Update `Dockerfile` and `docker-compose.yml` to reference the local directory the repos will be cloned to
+- Run the container with `docker-compose up -d`
+
+## Without docker
+
+- Install the requirements with `pip install -r requirements.txt`
+- Run with `python app/main.py`
 
 ## Translations
 
