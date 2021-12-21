@@ -4,3 +4,4 @@ services:
         volumes:
             - ./app:/github/app
             - ./repos:/github/repos
+            - ./logs:/github/logs

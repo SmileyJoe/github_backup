@@ -5,12 +5,13 @@ RUN apt-get update && apt-get -y install cron vim
 WORKDIR /github/app
 COPY ./app /github/app
 COPY ./repos /github/repos
+COPY ./logs /github/logs
 
 RUN pip install -r requirements.txt
-COPY crontab /etc/cron.d/crontab
+COPY crontab /etc/cron.d/github_backup
 
-RUN chmod 0644 /etc/cron.d/crontab
-RUN /usr/bin/crontab /etc/cron.d/crontab
+RUN chmod 0644 /etc/cron.d/github_backup
+RUN /usr/bin/crontab /etc/cron.d/github_backup
 
 # run crond as main process of container
 CMD ["cron", "-f"]

@@ -1,6 +1,7 @@
 import json
 from types import SimpleNamespace
 import yaml
+import os
 
 
 # Loads in the yaml config
@@ -24,7 +25,7 @@ class Config:
     @staticmethod
     # Parse the given yaml file into a dict
     def _load_yaml(file_name):
-        file = open(file_name, "r")
+        file = open(os.path.join(os.path.dirname(__file__), file_name), "r")
         data = yaml.load(file, Loader=yaml.FullLoader)
         file.close()
         return data

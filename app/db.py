@@ -5,7 +5,7 @@ import json
 
 # Simple json file to be used for storing data between runs
 class Db:
-    FILE = "db.json"
+    FILE = os.path.join(os.path.dirname(__file__), "db.json")
 
     def __init__(self):
         # if the file doesn't exist yet, set the defaults
