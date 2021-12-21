@@ -1,2 +1,2 @@
 #run python script every day at midnight
-0 0 * * * /usr/local/bin/python /github/app/main.py > /proc/1/fd/1 2>/proc/1/fd/2
+0 0 * * * /usr/local/bin/python /github/app/main.py >> /github/logs/github_backup.log 2>&1
