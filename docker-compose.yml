@@ -5,3 +5,4 @@ services:
             - ./app:/github/app
             - ./repos:/github/repos
             - ./logs:/github/logs
+        restart: unless-stopped
