@@ -32,7 +32,7 @@ for repo in github.get_user().get_repos(affiliation="owner", sort="pushed", dire
                 username=config.github.username,
                 password=config.github.token,
                 repo_name=repo.full_name)
-            Repo.clone_from(repo_url, repo_dir)
+            Repo.clone_from(repo_url, repo_dir, multi_options=["--config core.filemode=false"])
             log.cloned(repo.name)
         # else we need to pull the new contents
         else:
