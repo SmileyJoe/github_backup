@@ -36,5 +36,5 @@ This is meant as a backup, the repos it clones should not be updated as there is
 
 - [PyGithub](https://github.com/PyGithub/PyGithub)
 - [GitPython](https://github.com/gitpython-developers/GitPython)
-- [python-pushover](https://github.com/Thibauth/python-pushover)
+- [python-pushover](https://github.com/SmileyJoe/python-pushover/tree/v0.4)
 - [pyyaml](https://github.com/yaml/pyyaml)
