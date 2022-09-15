@@ -1,4 +1,4 @@
 PyGithub
 GitPython
-python-pushover
+git+https://github.com/SmileyJoe/python-pushover@v0.4#egg=python-pushover
 pyyaml

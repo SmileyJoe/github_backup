@@ -4,8 +4,6 @@ RUN apt-get update && apt-get -y install cron vim
 
 WORKDIR /github/app
 COPY ./app /github/app
-COPY ./repos /github/repos
-COPY ./logs /github/logs
 
 RUN pip install -r requirements.txt
 COPY crontab /etc/cron.d/github_backup
